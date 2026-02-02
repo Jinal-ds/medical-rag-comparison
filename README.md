@@ -2,7 +2,11 @@
 
 A Streamlit-based RAG (Retrieval-Augmented Generation) application that compares **CBOW** and **Skip-Gram** word embedding methods for medical document question answering.
 
-![Medical RAG Demo](https://jinal-ds-medical-rag-comparison-app-xrtfpe.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://jinal-ds-medical-rag-comparison-app-xrtfpe.streamlit.app/)
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white)](https://python.org)
+
+🔗 **[Try the Live Demo](https://jinal-ds-medical-rag-comparison-app-xrtfpe.streamlit.app/)**
+
 
 ## 🎯 Features
 
