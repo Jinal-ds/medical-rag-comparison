@@ -219,9 +219,19 @@ if "pdf_name" not in st.session_state:
 @st.cache_resource
 def get_llm_client():
     """Initialize HuggingFace Inference Client."""
-    token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+    # Try Streamlit secrets first (for cloud deployment)
+    token = None
+    try:
+        token = st.secrets.get("HUGGINGFACEHUB_API_TOKEN")
+    except:
+        pass
+    
+    # Fall back to environment variable (for local development)
     if not token:
-        st.error("⚠️ HuggingFace API token not found. Please set HUGGINGFACEHUB_API_TOKEN in .env file")
+        token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+    
+    if not token:
+        st.error("⚠️ HuggingFace API token not found. Please set HUGGINGFACEHUB_API_TOKEN in Streamlit secrets or .env file")
         return None
     return InferenceClient(token=token)
 
