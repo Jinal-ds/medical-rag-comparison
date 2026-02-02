@@ -1,0 +1,12 @@
+streamlit
+pypdf
+nltk
+gensim
+faiss-cpu
+numpy
+scikit-learn
+langchain
+langchain-community
+langchain-huggingface
+huggingface_hub
+python-dotenv
