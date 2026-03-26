@@ -274,7 +274,7 @@ def generate_answer(client, context, query):
         response = client.text_generation(
             prompt=prompt,
             model="mistralai/Mistral-7B-Instruct-v0.3",
-            max_tokens=400,
+            max_new_tokens=400,
             temperature=0.3
         )
         
