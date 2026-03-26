@@ -253,7 +253,7 @@ def generate_answer(client, context, query):
             }
         ]
         
-        response = client.chat_completion(
+        response = client.text_generation(
             messages=messages,
             model="mistralai/Mistral-7B-Instruct-v0.3",
             max_tokens=400,
@@ -281,7 +281,7 @@ with st.sidebar:
     st.markdown("## 🧬 Medical RAG")
     st.markdown("---")
     
-    st.markdown("### 📄 Upload Document")
+    st.markdown("###  Upload Document")
     uploaded_pdf = st.file_uploader(
         "Upload medical PDF",
         type="pdf",
@@ -290,7 +290,7 @@ with st.sidebar:
     
     st.markdown("---")
     
-    st.markdown("### ⚙️ Settings")
+    st.markdown("###  Settings")
     top_k = st.slider("Chunks to retrieve", 1, 5, 3)
     
     st.markdown("---")
@@ -338,7 +338,7 @@ if not st.session_state.pdf_processed:
 # ================== PDF PROCESSING ==================
 if uploaded_pdf:
     if uploaded_pdf.name != st.session_state.pdf_name:
-        with st.spinner("📄 Processing document..."):
+        with st.spinner(" Processing document..."):
             try:
                 text = read_pdf(uploaded_pdf)
                 chunks = chunk_text(text)
@@ -357,11 +357,11 @@ if uploaded_pdf:
         # Document info
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.metric("📄 Document", st.session_state.pdf_name[:15] + "..." if len(st.session_state.pdf_name) > 15 else st.session_state.pdf_name)
+            st.metric(" Document", st.session_state.pdf_name[:15] + "..." if len(st.session_state.pdf_name) > 15 else st.session_state.pdf_name)
         with col2:
-            st.metric("📝 Chunks", len(st.session_state.chunks))
+            st.metric(" Chunks", len(st.session_state.chunks))
         with col3:
-            st.metric("💬 Questions", len(st.session_state.chat_history))
+            st.metric(" Questions", len(st.session_state.chat_history))
         
         st.markdown("---")
         
@@ -376,7 +376,7 @@ if uploaded_pdf:
         if submitted and query:
             chunks = st.session_state.chunks
             
-            with st.spinner("🔄 Retrieving and generating answers..."):
+            with st.spinner(" Retrieving and generating answers..."):
                 # Retrieve chunks
                 cbow_chunks, cbow_metrics = retrieve_chunks(query, chunks, "cbow", top_k=top_k)
                 sg_chunks, sg_metrics = retrieve_chunks(query, chunks, "skipgram", top_k=top_k)
@@ -406,12 +406,12 @@ if uploaded_pdf:
                 # Question
                 st.markdown(f"""
                 <div class="question-box">
-                    <p><strong>🙋 Q{idx}:</strong> {entry['query']}</p>
+                    <p><strong> Q{idx}:</strong> {entry['query']}</p>
                 </div>
                 """, unsafe_allow_html=True)
                 
                 # Metrics row
-                st.markdown("#### 📊 Performance Metrics")
+                st.markdown("####  Performance Metrics")
                 m1, m2, m3, m4 = st.columns(4)
                 
                 cbow_m = entry['cbow']['metrics']
@@ -488,7 +488,7 @@ if uploaded_pdf:
 
 else:
     # How it works
-    st.markdown("## 🎯 How It Works")
+    st.markdown("##  How It Works")
     
     c1, c2, c3 = st.columns(3)
     
