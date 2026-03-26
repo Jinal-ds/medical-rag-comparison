@@ -1,3 +1,5 @@
+from pyexpat.errors import messages
+
 import streamlit as st
 from utils import *
 from huggingface_hub import InferenceClient
@@ -252,6 +254,22 @@ def generate_answer(client, context, query):
                 "content": f"Context:\n{context}\n\nQuestion: {query}\n\nProvide a clear, accurate answer based on the context above."
             }
         ]
+
+        # Convert messages to prompt
+        prompt = ""
+
+        for msg in messages:
+            role = msg["role"]
+            content = msg["content"]
+    
+            if role == "system":
+                prompt += f"System: {content}\n"
+            elif role == "user":
+                prompt += f"User: {content}\n"
+
+            prompt += "Assistant:"
+
+
         
         response = client.text_generation(
             messages=messages,
@@ -311,7 +329,7 @@ with st.sidebar:
     
     st.markdown("---")
     
-    if st.button("🗑️ Clear History"):
+    if st.button(" Clear History"):
         st.session_state.chat_history = []
         st.rerun()
 
@@ -330,7 +348,7 @@ llm_client = get_llm_client()
 if not st.session_state.pdf_processed:
     st.markdown("""
     <div class="info-box">
-        <h4>👋 Welcome!</h4>
+        <h4> Welcome!</h4>
         <p>Upload a medical PDF in the sidebar, then ask questions to compare CBOW and Skip-Gram embeddings.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -371,7 +389,7 @@ if uploaded_pdf:
                 "🔍 Ask a medical question:",
                 placeholder="e.g., What is human reproduction?"
             )
-            submitted = st.form_submit_button("🚀 Get Answers")
+            submitted = st.form_submit_button(" Get Answers")
         
         if submitted and query:
             chunks = st.session_state.chunks
