@@ -271,12 +271,21 @@ def generate_answer(client, context, query):
 
 
         
-        response = client.text_generation(
-            prompt=prompt,
-            model="mistralai/Mistral-7B-Instruct-v0.3",
-            max_new_tokens=400,
-            temperature=0.3
-        )
+        response = client.chat_completion(
+        model="mistralai/Mistral-7B-Instruct-v0.3",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a helpful medical assistant. Answer based only on context."
+            },
+            {
+                "role": "user",
+                "content": f"Context:\n{context}\n\nQuestion: {query}"
+            }
+        ],
+        max_tokens=400,
+        temperature=0.3 
+    )
         
         return response.choices[0].message.content
         
